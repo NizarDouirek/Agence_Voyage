@@ -99,19 +99,20 @@ function Book() {
                                     <div className="col-md-12 form-group contact-forms">
                                         <label htmlFor="paymentMethod">Payment Method</label>
                                         <div className="form-check form-check-inline">
-                                            <input
-                                                onChange={(e) => {
-                                                    handleBlur(e);
-                                                    handlePaymentMethodChange(e);
-                                                }}
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="paymentMethod"
-                                                id="creditCard"
-                                                value="creditCard"
-                                                defaultChecked
-                                                style={{ width: "15px", height: "15px", marginRight: "10px" }}
-                                            />
+                                        <input
+    onChange={(e) => {
+        handleBlur(e);
+        handlePaymentMethodChange(e);
+    }}
+    className="form-check-input"
+    type="radio"
+    name="paymentMethod"
+    id="creditCard"
+    value="creditCard"
+    defaultChecked
+    style={{ width: "15px", height: "15px", marginRight: "10px" }}
+/>
+
                                             <label className="form-check-label" htmlFor="creditCard" style={{ marginRight: "20px" }}>Credit Card</label>
                                             <img src={credit} alt="" className="img-fluid" style={{ width: "120px", height: "20px"}} />
                                         </div>
