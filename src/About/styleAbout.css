@@ -1,0 +1,149 @@
+.counter span.fa {
+    font-size: 2em;
+    color: #047ffc;
+}
+
+.timer {
+    font-size: 3em;
+    font-weight: 300;
+}
+
+.timer span {
+    font-size: 20px;
+    font-weight: 500;
+    color: #777;
+}
+
+p.count-text {
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+
+
+/*iner*/
+
+
+
+/* tabs */
+.inner-w3pvt-wrap {
+    padding-top: 2em;
+}
+
+.inner-w3pvt-wrap h4 {
+    font-size: 22px;
+    color: #fff;
+    font-weight: 600;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+}
+
+.inner-sec-grid {
+    padding: 2.5em 2em;
+    border: none;
+    transition: none;
+    border: 1px solid #999;
+}
+.inner-sec-grid span.fa {
+    font-size: 2em;
+    color: #047ffc;
+}
+.choose {
+    background: url(../About/choose.jpg) no-repeat center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+}
+.choose h2.heading{
+	color: #fff;
+}
+.overlay-all {
+    background: rgba(0, 0, 0, 0.5);
+}
+.inner-w3pvt-wrap p {
+    font-size: 15px;
+    color: #ccc;
+}
+
+.tab-main section {
+    display: none;
+}
+
+.tab-main input.w3pvt-sm {
+    display: none;
+}
+
+.tab-main label {
+    display: inline-block;
+    padding: 12px 25px;
+    color: #333;
+    background: #fff;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.tab-main span {
+    margin-right: 0.5em;
+}
+
+.tab-main label:before {
+    font-family: fontawesome;
+    font-weight: normal;
+    margin-right: 10px;
+    opacity: 0;
+    display: none;
+}
+
+.tab-main label[for*='1']:before {
+    content: '\f1cb';
+}
+
+.tab-main label[for*='2']:before {
+    content: '\f17d';
+}
+
+.tab-main label[for*='3']:before {
+    content: '\f16c';
+}
+
+.tab-main label[for*='4']:before {
+    content: '\f171';
+}
+
+.tab-main label:hover {
+    cursor: pointer;
+}
+
+.tab-main input:checked+label {
+    background: #047ffc;
+    color: #fff;
+}
+
+.tab-main #tab1:checked~#content1,
+.tab-main #tab2:checked~#content2,
+.tab-main #tab3:checked~#content3,
+.tab-main #tab4:checked~#content4 {
+    display: block;
+}
+
+
+
+
+/*cmnts-img*/
+
+.testi-info h3 {
+    font-size: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.test-img img {
+    -webkit-border-radius: 50%;
+    -o-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}

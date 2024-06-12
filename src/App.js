@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Header from './Components/Header';
+import About from './About/About';
+import Contact from './Contact/Contact';
+import Book from './Book/Book';
+import Package from './Package/Package';
+import Reservation from './Reservation/Reservation';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import PaymentForm from './Paiement/Payment.jsx';
+import Hotel from './Hotel/Hotel.jsx';
+import home from './Home/Home.jsx';
+import Home from './Home/Home.jsx';
+// Chargez votre clé publique Stripe
+const stripePromise = loadStripe('YOUR_STRIPE_PUBLIC_KEY');
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+const App = () => (
+  <Router>
+    <div>
+      <Routes>
+        <Route path="/" element={<Header />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/book" element={<Book />} />
+        <Route path="/package" element={<Package />} />
+        <Route path="/reservation" element={<Reservation />} />
+        <Route path="/header" element={<Header />} />
+        <Route path="/hotel" element={<Hotel />} />
+
+        {/* Ajoutez cette route pour le formulaire de paiement */}
+        <Route path="/payment" element={<Elements stripe={stripePromise}><PaymentForm /></Elements>} />
+      </Routes>
     </div>
-  );
-}
+  </Router>
+);
 
 export default App;

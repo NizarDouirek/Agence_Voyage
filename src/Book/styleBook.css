@@ -1,0 +1,8 @@
+.image-tour p {
+    position: absolute;
+    right: 1%;
+    bottom: 2%;
+    background: #047ffc;
+    padding: 5px 10px;
+    color: #fff;
+  }
