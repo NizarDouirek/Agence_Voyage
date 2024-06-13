@@ -122,7 +122,6 @@ function Book() {
                                                 id="creditCard"
                                                 value="creditCard"
                                                 defaultChecked
-                                                onChange={handlePaymentMethodChange}
                                                 style={{ width: "15px", height: "15px", marginRight: "10px" }}
                                             />
 
@@ -130,6 +129,7 @@ function Book() {
                                             <img src={credit} alt="" className="img-fluid" style={{ width: "120px", height: "20px"}} />
                                         </div>
                                         <div className="form-check form-check-inline">
+
                                         <input
     onChange={(e) => {
         handleBlur(e);
@@ -143,6 +143,19 @@ function Book() {
     defaultChecked
     style={{ width: "15px", height: "15px", marginRight: "10px" }}
 />
+
+                                            <input
+                                                onChange={(e) => {
+                                                    handleBlur(e);
+                                                    handlePaymentMethodChange(e);
+                                                }}
+                                                className="form-check-input"
+                                                type="radio"
+                                                name="paymentMethod"
+                                                id="paypal"
+                                                value="paypal"
+                                                style={{ width: "15px", height: "15px", marginRight: "10px" }}
+                                            />
                                             <label className="form-check-label" htmlFor="paypal">PayPal</label>
                                             <img src={paypal} alt="" className="img-fluid" style={{ width: "50px", height: "20px"}} />
                                         </div>
