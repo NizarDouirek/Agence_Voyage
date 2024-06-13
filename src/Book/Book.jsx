@@ -6,13 +6,48 @@ import banner1 from "../Book/banner1.jpg";
 import credit from "../Book/credit.png";
 import paypal from "../Book/paypal.png";
 import "./styleBook.css";
+import Swal from 'sweetalert2'
 
 function Book() {
     const [showPaypalForm, setShowPaypalForm] = useState(false);
+    const [data, setData] = useState({
+        paymentMethod: "creditCard",
+    });
 
     const handlePaymentMethodChange = (event) => {
         setShowPaypalForm(event.target.value === "paypal");
     };
+
+    const handleBlur = (e) => {
+        const {name, value} = e.target;
+        setData({
+            ...data,
+            [name]: value,
+        })
+        console.log(data);
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const response = await fetch("http://127.0.0.1:8000/api/reservations", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+              "Content-Type": "application/json"
+            }
+          });
+          const dataRec = await response.json();
+          console.log(dataRec);
+
+          document.getElementById("form").reset();
+
+          Swal.fire({
+            title: "Good job!",
+            text: "You clicked the button!",
+            icon: "success"
+          });
+    }
 
     return (
         <div>
@@ -23,41 +58,41 @@ function Book() {
                     <div className="contact-grids">
                         <div className="row">
                             <div className="col-lg-7 contact-left-form">
-                                <form action="#" method="post" className="row">
+                                <form id="form" onSubmit={handleSubmit} className="row">
                                     <div className="col-sm-6 form-group contact-forms">
-                                        <input type="text" className="form-control" placeholder="Name" required="" style={{ marginBottom: "15px" }} />
+                                        <input name="name" onBlur={handleBlur} type="text" className="form-control" placeholder="Name" required="" style={{ marginBottom: "15px" }} />
                                     </div>
                                     <div className="col-sm-6 form-group contact-forms">
-                                        <input type="email" className="form-control" placeholder="Email" required="" style={{ marginBottom: "15px" }} />
+                                        <input name="email" onBlur={handleBlur} type="email" className="form-control" placeholder="Email" required="" style={{ marginBottom: "15px" }} />
                                     </div>
                                     <div className="col-sm-6 form-group contact-forms">
-                                        <input type="text" className="form-control" placeholder="Phone" required="" style={{ marginBottom: "15px" }} />
+                                        <input name="phone" onBlur={handleBlur} type="text" className="form-control" placeholder="Phone" required="" style={{ marginBottom: "15px" }} />
                                     </div>
                                     <div className="col-sm-6 form-group contact-forms">
-                                        <input type="text" className="form-control" placeholder="Date" required="" style={{ marginBottom: "15px" }} />
+                                        <input name="date" onBlur={handleBlur} type="date" className="form-control" placeholder="Date" required="" style={{ marginBottom: "15px" }} />
                                     </div>
                                     <div className="col-sm-6 form-group contact-forms">
-                                        <select className="form-control" id="adults" style={{ marginBottom: "15px" }}>
-                                            <option>Adults</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5 or more</option>
+                                        <select name="adults" className="form-control" id="adults" onBlur={handleBlur} style={{ marginBottom: "15px" }}>
+                                            <option value="">Adults</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5 or more">5 or more</option>
                                         </select>
                                     </div>
                                     <div className="col-sm-6 form-group contact-forms">
-                                        <select className="form-control" id="kids" style={{ marginBottom: "15px" }}>
-                                            <option>Kids</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5 or more</option>
+                                        <select name="kids" className="form-control" id="kids" onBlur={handleBlur} style={{ marginBottom: "15px" }}>
+                                            <option value="">Kids</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5 or more">5 or more</option>
                                         </select>
                                     </div>
                                     <div className="col-md-12 form-group contact-forms">
-                                        <textarea className="form-control" placeholder="Message" rows="3" required="" style={{ marginBottom: "15px" }}></textarea>
+                                        <textarea name="message" onBlur={handleBlur} className="form-control" placeholder="Message" rows="3" required="" style={{ marginBottom: "15px" }}></textarea>
                                     </div>
                                     <h2>Payment</h2>
                                     {/* Payment Information Fields */}
@@ -65,13 +100,16 @@ function Book() {
                                         <label htmlFor="paymentMethod">Payment Method</label>
                                         <div className="form-check form-check-inline">
                                             <input
+                                                onChange={(e) => {
+                                                    handleBlur(e);
+                                                    handlePaymentMethodChange(e);
+                                                }}
                                                 className="form-check-input"
                                                 type="radio"
                                                 name="paymentMethod"
                                                 id="creditCard"
                                                 value="creditCard"
                                                 defaultChecked
-                                                onChange={handlePaymentMethodChange}
                                                 style={{ width: "15px", height: "15px", marginRight: "10px" }}
                                             />
                                             <label className="form-check-label" htmlFor="creditCard" style={{ marginRight: "20px" }}>Credit Card</label>
@@ -79,12 +117,15 @@ function Book() {
                                         </div>
                                         <div className="form-check form-check-inline">
                                             <input
+                                                onChange={(e) => {
+                                                    handleBlur(e);
+                                                    handlePaymentMethodChange(e);
+                                                }}
                                                 className="form-check-input"
                                                 type="radio"
                                                 name="paymentMethod"
                                                 id="paypal"
                                                 value="paypal"
-                                                onChange={handlePaymentMethodChange}
                                                 style={{ width: "15px", height: "15px", marginRight: "10px" }}
                                             />
                                             <label className="form-check-label" htmlFor="paypal">PayPal</label>
@@ -95,83 +136,94 @@ function Book() {
                                     {showPaypalForm ? (
                                         <div>
                                             {/* Paypal Form Fields */}
+                                            <input name="type" type="hidden" value="paypal" />
                                             <div className="col-sm-6 form-group contact-forms">
                                                 <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="Nom de l'acheteur"
-                                                    required=""
-                                                    style={{ marginBottom: "15px" }}
-                                                />
-                                            </div>
-                                            <div className="col-sm-6 form-group contact-forms">
-                                                <input
+                                                    name="paypalBuyerFirstName"
                                                     type="text"
                                                     className="form-control"
                                                     placeholder="Prénom"
                                                     required=""
+                                                    onBlur={handleBlur}
+                                                    style={{ marginBottom: "15px" }}
+                                                />
+                                            </div>
+                                            <div className="col-sm-6 form-group contact-forms">
+                                                <input
+                                                    name="paypalBuyerLastName"
+                                                    type="text"
+                                                    className="form-control"
+                                                    placeholder="Nom de l'acheteur"
+                                                    required=""
+                                                    onBlur={handleBlur}
                                                     style={{ marginBottom: "15px" }}
                                                 />
                                             </div>
                                             <div className="col-md-12 form-group contact-forms">
                                                 <input
+                                                    name="paypalBuyerEmail"
                                                     type="email"
                                                     className="form-control"
                                                     placeholder="Email"
                                                     required=""
+                                                    onBlur={handleBlur}
                                                     style={{ marginBottom: "15px" }}
                                                 />
                                             </div>
                                             <div className="col-md-12 form-group contact-forms">
                                                 <input
+                                                    name="paypalBuyerAddress"
                                                     type="text"
                                                     className="form-control"
                                                     placeholder="Adresse"
                                                     required=""
+                                                    onBlur={handleBlur}
                                                     style={{ marginBottom: "15px" }}
                                                 />
                                             </div>
                                         </div>
                                     ) : (
+                                        
                                         <div>
+                                            <input name="type" type="hidden" value="credit-card" />
                                             <div className="row">
                                                 <div className="col-sm-6 form-group contact-forms">
-                                                    <input type="text" className="form-control" placeholder="Prénom" required="" style={{ marginBottom: "15px" }} />
+                                                    <input name="creditFirstName" onBlur={handleBlur} type="text" className="form-control" placeholder="Prénom" required="" style={{ marginBottom: "15px" }} />
                                                 </div>
                                                 <div className="col-sm-6 form-group contact-forms">
-                                                    <input type="text" className="form-control" placeholder="Nom de famille" required="" style={{ marginBottom: "15px" }} />
+                                                    <input name="creditLastName" onBlur={handleBlur} type="text" className="form-control" placeholder="Nom de famille" required="" style={{ marginBottom: "15px" }} />
                                                 </div>
                                             </div>
                                             <div className="row">
                                                 <div className="col-sm-6 form-group contact-forms">
-                                                    <input type="text" className="form-control" placeholder="Numéro de la carte de crédit" required="" style={{ marginBottom: "15px" }} />
+                                                    <input name="creditCardNumber" onBlur={handleBlur} type="text" className="form-control" placeholder="Numéro de la carte de crédit" required="" style={{ marginBottom: "15px" }} />
                                                 </div>
                                                 <div className="col-sm-6 form-group contact-forms">
-                                                    <input type="text" className="form-control" placeholder="Code de sécurité (CVV)" required="" style={{ marginBottom: "15px" }} />
-                                                </div>
-                                            </div>
-                                            <div className="row">
-                                                <div className="col-sm-6 form-group contact-forms">
-                                                    <input type="text" className="form-control" placeholder="Mois d'expiration" required="" style={{ marginBottom: "15px" }} />
-                                                </div>
-                                                <div className="col-sm-6 form-group contact-forms">
-                                                    <input type="text" className="form-control" placeholder="Expiration Year" required="" style={{ marginBottom: "15px" }} />
+                                                    <input name="creditCardCVV" onBlur={handleBlur} type="text" className="form-control" placeholder="Code de sécurité (CVV)" required="" style={{ marginBottom: "15px" }} />
                                                 </div>
                                             </div>
                                             <div className="row">
                                                 <div className="col-sm-6 form-group contact-forms">
-                                                    <input type="text" className="form-control" placeholder="Adresse complémentaire" required="" style={{ marginBottom: "15px" }} />
+                                                    <input name="creditCardExpMonth" onBlur={handleBlur} type="text" className="form-control" placeholder="Mois d'expiration" required="" style={{ marginBottom: "15px" }} />
                                                 </div>
                                                 <div className="col-sm-6 form-group contact-forms">
-                                                    <input type="text" className="form-control" placeholder="Département" required="" style={{ marginBottom: "15px" }} />
+                                                    <input name="creditCardExpYear" onBlur={handleBlur} type="text" className="form-control" placeholder="Expiration Year" required="" style={{ marginBottom: "15px" }} />
                                                 </div>
                                             </div>
                                             <div className="row">
                                                 <div className="col-sm-6 form-group contact-forms">
-                                                    <input type="text" className="form-control" placeholder="Code postal" required="" style={{ marginBottom: "15px" }} />
+                                                    <input name="creditBillingAddress2" onBlur={handleBlur} type="text" className="form-control" placeholder="Adresse complémentaire" required="" style={{ marginBottom: "15px" }} />
                                                 </div>
                                                 <div className="col-sm-6 form-group contact-forms">
-                                                    <select className="form-control" id="country" required="" style={{ marginBottom: "15px" }}>
+                                                    <input name="creditBillingDepartment" onBlur={handleBlur} type="text" className="form-control" placeholder="Département" required="" style={{ marginBottom: "15px" }} />
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-sm-6 form-group contact-forms">
+                                                    <input name="creditBillingPostalCode" onBlur={handleBlur} type="text" className="form-control" placeholder="Code postal" required="" style={{ marginBottom: "15px" }} />
+                                                </div>
+                                                <div className="col-sm-6 form-group contact-forms">
+                                                    <select name="creditBillingCountry" className="form-control" id="country" required="" onBlur={handleBlur} style={{ marginBottom: "15px" }}>
                                                         <option value="">Pays</option>
                                                         <option value="France">France</option>
                                                         <option value="Germany">Germany</option>
