@@ -27,14 +27,14 @@ const Home = () => {
 		
 		<nav class="py-md-4 py-3 d-lg-flex">
 			<div id="logo">
-				<h1 class="mt-md-0 mt-2"> <a href="index.html"><span class="fa fa-map-signs"></span> Luxury Voyage</a></h1>
+				<h1 class="mt-md-0 mt-2"> <a href="home"><span class="fa fa-map-signs"></span> Luxury Voyage</a></h1>
 			</div>
 			<label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
 			
 			<ul class="menu ml-auto mt-1">
 				
             <li className="">
-              <a href="index.html">Home</a>
+              <a href="/home">Home</a>
             </li>
             <li className="">
             <Link to="/about">About</Link>

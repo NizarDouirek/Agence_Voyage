@@ -57,6 +57,7 @@ const App = () => {
             <Route path="/reservation" element={<Reservation />} />
             <Route path="/header" element={<Header />} />
             <Route path="/hotel" element={<Hotel />} />
+            
   
             {/* Ajoutez cette route pour le formulaire de paiement */}
             <Route path="/payment" element={<Elements stripe={stripePromise}><PaymentForm /></Elements>} />

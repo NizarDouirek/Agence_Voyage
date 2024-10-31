@@ -1,13 +1,63 @@
-import React from "react";
+import React,{useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
+import Swal from 'sweetalert2'
 import "./styleContact.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faGoogle, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faMapMarkerAlt, faEnvelope, faComment } from '@fortawesome/free-solid-svg-icons'; // Importation des icônes nécessaires
-function Contact(){
+function Contact() {
+    const [data, setData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+    });
+
+    const handleBlur = (e) => {
+        const { name, value } = e.target;
+        setData({
+            ...data,
+            [name]: value,
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/contacts", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const dataRec = await response.json();
+            e.target.reset();
+
+            Swal.fire({
+                title: "Good job!",
+                text: "Message sent successfully!",
+                icon: "success"
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: "Error!",
+                text: "There was an error sending your message. Please try again.",
+                icon: "error"
+            });
+        }
+    };
     return(
+
     <div>
         <Navbar/>
 
@@ -54,18 +104,18 @@ function Contact(){
 			<div class="contact-grids mt-5">
 				<div class="row">
 					<div class="col-lg-6 col-md-6 contact-left-form">
-						<form action="#" method="post">
+						<form id="form" onSubmit={handleSubmit}  method="post">
 							<div class=" form-group contact-forms">
-							  <input type="text" class="form-control" placeholder="Name" required="" style={{marginBottom:"15px"}}/>
+							  <input name="name" onBlur={handleBlur} type="text" class="form-control" placeholder="Name" required="" style={{marginBottom:"15px"}}/>
 							</div>
 							<div class="form-group contact-forms">
-							  <input type="email" class="form-control" placeholder="Email" required=""style={{marginBottom:"15px"}}/>
+							  <input name="email" onBlur={handleBlur} type="email" class="form-control" placeholder="Email" required=""style={{marginBottom:"15px"}}/>
 							</div>
 							<div class="form-group contact-forms">
-							  <input type="text" class="form-control" placeholder="Phone" required=""style={{marginBottom:"15px"}}/> 
+							  <input name="phone" onBlur={handleBlur} type="text" class="form-control" placeholder="Phone" required=""style={{marginBottom:"15px"}}/> 
 							</div>
 							<div class="form-group contact-forms">
-							  <textarea class="form-control" placeholder="Message" rows="3" required=""style={{marginBottom:"15px"}}></textarea>
+							  <textarea name="message" onBlur={handleBlur} class="form-control" placeholder="Message" rows="3" required=""style={{marginBottom:"15px"}}></textarea>
 							</div>
 							<button class="btn btn-block sent-butnn" style={{width:"100%"}}>Send</button>
 						</form>
